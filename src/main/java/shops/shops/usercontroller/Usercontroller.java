@@ -1,31 +1,38 @@
 package shops.shops.usercontroller;
 
+import java.util.List;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+/* 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+ */
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.validation.Valid;
+import shops.shops.product.Products;
 import shops.shops.productdto.Productdto;
 import shops.shops.productservice.ProductSrivice;
 import shops.shops.userentity.User;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
-@RequestMapping("/api")
 @RestController
+@RequestMapping()
 public class Usercontroller {
      @Autowired
      private ProductSrivice productSrivice;
 
-    @GetMapping("/userinfo")
+   /*  @GetMapping("/userinfo")
     public ResponseEntity<User> getuseinfo(@AuthenticationPrincipal OAuth2User oAuth2User){
      String name = oAuth2User.getAttribute("name");
      String email = oAuth2User.getAttribute("email");
@@ -33,14 +40,38 @@ public class Usercontroller {
 
      return ResponseEntity.ok(user);
     }
+     */
     
-    @PostMapping(path = "/admin addproduct")
-    public ResponseEntity<Productdto> addproduct( @Valid 
-     @RequestPart("products") Productdto productdto,
-     @RequestPart("file") MultipartFile file){
-       productSrivice.addproduct(productdto,file);
+    @GetMapping("/user/home")
+    public String homepage(){
+      return"this the home page";
+    }
+        
+   
+    @PostMapping(path ="/admin/addproduct", consumes  = MediaType.MULTIPART_FORM_DATA_VALUE )
+    public ResponseEntity<Productdto> addproduct( 
+     @RequestPart("product") @Valid Productdto productdto,
+     @RequestPart("file") MultipartFile file){ 
+        productSrivice.addproduct(productdto,file);
      return ResponseEntity.ok().build();
     
-}
+   }
+    @GetMapping("/user/getall")
+    public ResponseEntity <List< Productdto>>getallproduct(){
+    List <Productdto> productdtos = productSrivice.getAllproducts();
+    return ResponseEntity.ok(productdtos);
+
+  }
+    @GetMapping("/admin/deletproduct")
+    public ResponseEntity<Void> delateproduct(@RequestParam String productname){
+        productSrivice.delateproduct(productname);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/product/user")
+    public ResponseEntity< Products> findproduct(@RequestParam String productname){
+        return ResponseEntity.ok(productSrivice.getproduct(productname));
+    }
+  
     
-}
+ }

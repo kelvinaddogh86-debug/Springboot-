@@ -21,7 +21,8 @@ public class ProductSrivice implements Productinterface{
     @Autowired
     private ProductRepository productRepository;
     private final Path uploadPath = Paths.get("uploads");
-
+     
+    @Override
     public Productdto addproduct(Productdto productdto,MultipartFile imageFile){
         try {
             
@@ -41,7 +42,7 @@ public class ProductSrivice implements Productinterface{
             product.setDiscription(productdto.getDiscription());
             product.setProduct_image(productdto.getProduct_image());
 
-            productRepository.save(product);
+              productRepository.save(product);
 
             return new Productdto(product.getProductname(),product.getPrice(),product.getDiscription(), product.getProduct_image());
 
@@ -58,13 +59,26 @@ public class ProductSrivice implements Productinterface{
         productdto.setProduct_image(products.getProduct_image());
         return productdto;
        }
-
+       @Override
       public List<Productdto> getAllproducts(){
        List < Products> products = productRepository.findAll();
         return products.stream().map(this::convertTodto).toList();
       }
     
+      @Override
+      public void delateproduct(String products){
+        Products Product = productRepository.findProductByProductname(products)
+        .orElseThrow(() -> new RuntimeException("product not found:"));
+          productRepository.delete(Product);
+      }
     
+      @Override
+      public Products getproduct(String productname){
+       Products product = productRepository.findProductByProductname(productname)
+       .orElseThrow(() -> new RuntimeException("product not found:"));
+       return product;
+        
+      }
 
 }
 

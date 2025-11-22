@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import shops.shops.product.Products;
 
 public interface ProductRepository extends JpaRepository<Products,Integer>{
-    Optional <Products> findProductByname(String Productname);
-    
+    Optional <Products> findProductByProductname(String productname);
+
 }

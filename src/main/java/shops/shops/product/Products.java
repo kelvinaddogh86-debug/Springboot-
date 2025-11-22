@@ -1,5 +1,6 @@
 package shops.shops.product;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -11,9 +12,13 @@ public class Products {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id ;
+    @Column(name = "productname")
     private String productname;
+    @Column(name = "price")
     private  double price ;
+    @Column(name = "discription")
     private String discription;
+    @Column(name = "product_image")
     private String product_image ;
     public int getId() {
         return id;
