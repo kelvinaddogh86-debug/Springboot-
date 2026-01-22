@@ -67,9 +67,9 @@ public class ProductSrivice implements Productinterface{
     
       @Override
       public void delateproduct(String products){
-        Products Product = productRepository.findProductByProductname(products)
+        Products product = productRepository.findProductByProductname(products)
         .orElseThrow(() -> new RuntimeException("product not found:"));
-          productRepository.delete(Product);
+           productRepository.delete(product);
       }
     
       @Override
@@ -78,6 +78,10 @@ public class ProductSrivice implements Productinterface{
        .orElseThrow(() -> new RuntimeException("product not found:"));
        return product;
         
+      }
+
+      public List <Products> searchbykey(String keyword){
+         return productRepository.findByProductnameContainingIgnoreCase(keyword);
       }
 
 }

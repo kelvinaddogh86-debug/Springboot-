@@ -9,14 +9,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import shops.shops.order.Orders;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private String name;
+    private String name; 
     private String email;
+    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+    private List <Orders> orders = new ArrayList<>();
 
     public User(){}
 
@@ -24,9 +27,6 @@ public class User {
         this.name = name;
         this.email= email;
     }
-
-  //  @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-  //  private List<Order> orders = new ArrayList<>();
     public int getId() {
         return id;
     }
@@ -45,11 +45,11 @@ public class User {
     public void setGmail(String gmail) {
         this.email = gmail;
     }
-  //  public List<Order> getOrders() {
-  //      return orders;
- //   }
-  //  public void setOrders(List<Order> orders) {
-   //     this.orders = orders;
-   // }
+      public List<Orders> getOrders() {
+       return orders;
+    }
+     public void setOrders(List<Orders> orders) {
+      this.orders = orders;
+    }
     
 }
