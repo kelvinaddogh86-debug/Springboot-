@@ -30,7 +30,7 @@ public class OrderService {
         this.userRepository = userRepository;
     }
 
-    public void addproduct(int productid, int orderid,int userid, int quantity){
+    public  Orderitem  addproduct(int productid, int orderid,int userid, int quantity){
         Products product = productRepository.findById(productid)
         .orElseThrow(() -> new RuntimeException("product not found:"));   
     
@@ -48,7 +48,7 @@ public class OrderService {
         orderitem.setOrder(oder);
         orderitem.setQuantity(quantity);
 
-        orderitemstRepository.save(orderitem);         
+        return  orderitemstRepository.save(orderitem);         
     }
 
     public List<Orderitem> view_Orders(int userid , int orderid){
