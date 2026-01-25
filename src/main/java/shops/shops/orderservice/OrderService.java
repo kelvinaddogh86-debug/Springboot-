@@ -1,6 +1,5 @@
 package shops.shops.orderservice;
 
-import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import shops.shops.order.Orders;
@@ -39,7 +38,7 @@ public class OrderService {
 
         User user = userRepository.findById(userid)
          .orElseThrow(() -> new RuntimeException("user not found:"));
-
+            
          if(oder.getUser().getId()!=(user.getId())){
               throw new RuntimeException("Order does not belong to this user");
          }
@@ -64,7 +63,7 @@ public class OrderService {
         return  orderitemstRepository.findByOrdersId(orderid);   
     }
     
-    public void placeOrder(int orderiteamsid, int orderid, int userid){
+    public Orders placeOrder(int orderiteamsid, int orderid, int userid){
     List <Orderitem> items = orderitemstRepository.findByOrdersId(orderiteamsid);
      Orders orders = orderRepoaitory.findById(orderid)
      .orElseThrow(() -> new RuntimeException("order not found:"));
@@ -78,7 +77,7 @@ public class OrderService {
     total += item.getProducts().getPrice() * item.getQuantity();
     }
     orders.setTotal(total);
-    
+      return orderRepoaitory.save(orders);
     }
 
 
