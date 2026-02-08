@@ -3,8 +3,10 @@ package shops.shops.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.web.SecurityFilterChain;
 
-/* *
 import shops.shops.costumouthservice.Coustomouthservice;
 
  @EnableWebSecurity
@@ -20,8 +22,8 @@ public class SecurityConfig {
           http
             .csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("api/admin/addproduct").permitAll()
-                .requestMatchers("/").permitAll()
+                .requestMatchers("/api/userinfo").permitAll()
+                .requestMatchers("/admin/addproduct").hasRole("admin")
                 .anyRequest().authenticated()
             )
             .oauth2Login(oauth2 -> oauth2
@@ -37,4 +39,4 @@ public class SecurityConfig {
     }  
     
 }
- */
+ 

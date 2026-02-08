@@ -8,7 +8,8 @@ import shops.shops.orderitemreository.OrderItemsRepository;
 import shops.shops.orderrepository.OrderRepoaitory;
 import shops.shops.product.Products;
 import shops.shops.productrepository.ProductRepository;
-import shops.shops.userentity.User;
+import shops.shops.userentity.Users;
+import shops.shops.userentity.Users;
 import shops.shops.userrepository.UserRepository;
 
 @Service 
@@ -36,7 +37,7 @@ public class OrderService {
         Orders oder = orderRepoaitory.findById(orderid)
         .orElseThrow(() -> new RuntimeException("product not found:"));
 
-        User user = userRepository.findById(userid)
+        Users user = userRepository.findById(userid)
          .orElseThrow(() -> new RuntimeException("user not found:"));
             
          if(oder.getUser().getId()!=(user.getId())){
@@ -51,7 +52,7 @@ public class OrderService {
     }
 
     public List<Orderitem> view_Orders(int userid , int orderid){
-        User  user = userRepository.findById(userid)
+        Users  user = userRepository.findById(userid)
         .orElseThrow(() -> new RuntimeException("user not found:"));
 
         Orders  orders = orderRepoaitory.findById(orderid)
@@ -67,7 +68,7 @@ public class OrderService {
     List <Orderitem> items = orderitemstRepository.findByOrdersId(orderiteamsid);
      Orders orders = orderRepoaitory.findById(orderid)
      .orElseThrow(() -> new RuntimeException("order not found:"));
-     User user = userRepository.findById(userid)
+     Users user = userRepository.findById(userid)
      .orElseThrow(() -> new RuntimeException("user not found:"));
      if(orders.getUser().getId()!=(user.getId())){
         throw new RuntimeException("not permited");

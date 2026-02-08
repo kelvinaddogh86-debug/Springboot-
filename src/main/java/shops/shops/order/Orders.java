@@ -17,7 +17,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import shops.shops.orderitem.Orderitem;
-import shops.shops.userentity.User;
+import shops.shops.userentity.Users;
 
 
 @Entity
@@ -27,8 +27,8 @@ public class Orders {
   @GeneratedValue(strategy = GenerationType.AUTO)
   private  int id ;
   @ManyToOne 
-  @JoinColumn(name ="user_id")  
-  private User user;
+  @JoinColumn(name ="users_id")  
+  private Users users;
   @OneToMany(mappedBy = "orders",cascade = CascadeType.ALL)
   private List<Orderitem> Order_item = new ArrayList<>();
   @CreationTimestamp
@@ -51,8 +51,8 @@ public class Orders {
   public int getId() {
     return id;
   }
-  public User getUser() {
-    return user;
+  public Users getUser() {
+    return users;
 }
   public List<Orderitem> getOrder_item() {
     return Order_item;
@@ -60,8 +60,8 @@ public class Orders {
   public void setOrder_item(List<Orderitem> order_item) {
     Order_item = order_item;
   }
-  public void setUser(User user) {
-    this.user = user;
+  public void setUser(Users user) {
+    this.users = user;
   }
   public void setId(int id) {
     this.id = id;

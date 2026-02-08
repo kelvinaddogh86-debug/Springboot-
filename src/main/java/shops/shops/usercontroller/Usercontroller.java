@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.DeleteMapping;
 /* 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +23,8 @@ import shops.shops.emailsender.Emailsender;
 import shops.shops.product.Products;
 import shops.shops.productdto.Productdto;
 import shops.shops.productservice.ProductSrivice;
+import shops.shops.userentity.Users;
+
 import org.springframework.web.bind.annotation.PostMapping;
 
 
@@ -37,17 +41,16 @@ public class Usercontroller {
       this.productSrivice = productSrivice;
      }
 
-   /*  @GetMapping("/userinfo")
-    public ResponseEntity<User> getuseinfo(@AuthenticationPrincipal OAuth2User oAuth2User){
+    @GetMapping("/api/userinfo")
+    public ResponseEntity<Users> getuseinfo(@AuthenticationPrincipal OAuth2User oAuth2User){
      String name = oAuth2User.getAttribute("name");
      String email = oAuth2User.getAttribute("email");
-     User user = new User(name,email);
+     Users user = new Users(name,email);
       emailsender.sendemail(user);
 
      return ResponseEntity.ok(user);
     }
-     */
-    
+     
     @GetMapping("/user/home")
     public String homepage(){
       return"this the home page";
@@ -61,24 +64,24 @@ public class Usercontroller {
      return ResponseEntity.ok().build();
     
    }
-    @GetMapping("/user/getall")
+    @GetMapping("/api/user/getall")
     public ResponseEntity <List< Productdto>>getallproduct(){
     List <Productdto> productdtos = productSrivice.getAllproducts();
     return ResponseEntity.ok(productdtos);
   
   }
-    @DeleteMapping("/admin/deletproduct")
+    @DeleteMapping("api/admin/deletproduct")
     public ResponseEntity<Void> delateproduct(@RequestParam String productname){
         productSrivice.delateproduct(productname);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/product/user")
+    @GetMapping("api/product/user")
     public ResponseEntity< Products> findproduct(@RequestParam String productname){
         return ResponseEntity.ok(productSrivice.getproduct(productname));
     }
 
-    @GetMapping("/user/product/key")
+    @GetMapping("api/user/product/key")
    public ResponseEntity<List<Products>> searchkeyword(@RequestPart String keyword){
     return ResponseEntity.ok(productSrivice.searchbykey(keyword));
     }

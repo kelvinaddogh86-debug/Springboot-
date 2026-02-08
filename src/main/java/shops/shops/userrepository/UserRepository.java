@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import shops.shops.userentity.User;
+import shops.shops.userentity.Users;
 
-public interface UserRepository extends JpaRepository<User,Integer> {
-   Optional <User> findByEmail(String email);
+public interface UserRepository extends JpaRepository<Users,Integer> {
+   Optional <Users> findByEmail(String email);
    
 }

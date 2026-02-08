@@ -12,18 +12,18 @@ import jakarta.persistence.OneToMany;
 import shops.shops.order.Orders;
 
 @Entity
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private String name; 
     private String email;
-    @OneToMany (mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany (mappedBy = "users", cascade = CascadeType.ALL)
     private List <Orders> orders = new ArrayList<>();
 
-    public User(){}
+    public Users(){}
 
-    public User ( String name , String email){
+    public Users ( String name , String email){
         this.name = name;
         this.email= email;
     }

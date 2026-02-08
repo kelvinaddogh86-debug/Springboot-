@@ -24,7 +24,7 @@ public class OrderController {
     public OrderController(OrderService orderService){
         this.orderService = orderService;
     }
-   @PostMapping("/addorder")
+   @PostMapping("/api/addorder")
     public ResponseEntity<Orderitem>addorderiteam(
     @RequestParam int productid, 
     @RequestParam int orderid,
@@ -33,17 +33,18 @@ public class OrderController {
     Orderitem saveOrderitem = orderService.addproduct(productid, orderid, userid, quantity);
     return ResponseEntity.ok(saveOrderitem);
     }  
-     @GetMapping("/view/orders")
+     @GetMapping("/api/view/orders/{id}")
      public ResponseEntity<List<Orderitem>>showorders(@PathVariable int userid,int orderid){
        List< Orderitem> vieworders = orderService.view_Orders(userid, orderid);
        return  ResponseEntity.ok(vieworders);
      }
 
-    @PostMapping("place/order")
+    @PostMapping("/api/place/order")
     public ResponseEntity <Orders> placeOrder(@RequestParam int orderitemid , int orderid, int user ){
       Orders orderitems = orderService.placeOrder(orderitemid, orderid, user);
       return  ResponseEntity.ok(orderitems);
     }
+    
   }
    
    

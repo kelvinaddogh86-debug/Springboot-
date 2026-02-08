@@ -5,13 +5,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import shops.shops.userentity.User;
+import shops.shops.userentity.Users;
 @Service
 public class Emailsender {
      @Autowired
     private JavaMailSender emailsender;
 
-    public void sendemail(User user ){
+    public void sendemail(Users user ){
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("kelvinaddogh86@gmail.com");
@@ -27,4 +27,7 @@ public class Emailsender {
         emailsender.send(message);     
     }
     
+    public void adminsemails(Users user)  {
+        
+    }
 }
