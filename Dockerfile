@@ -1,13 +1,16 @@
 
-FROM maven:3.9.6-eclipse-temurin-17 AS build
-WORKDIR /app
-COPY pom.xml .
-COPY src ./src
-RUN mvn clean package -DskipTests
+# Use an official Java runtime as a parent image
+FROM openjdk:17-jdk-slim
 
-
-FROM eclipse-temurin:17-jdk-jammy
+# Set working directory inside the container
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+# Copy the built jar from your project into the container
+COPY target/*.jar app.jar
+
+# Expose the port your app runs on (Spring Boot default is 8080)
 EXPOSE 8080
-CMD ["java", "-jar", "app.jar"]
+
+# Command to run your jar
+ENTRYPOINT ["java","-jar","app.jar"]
+
